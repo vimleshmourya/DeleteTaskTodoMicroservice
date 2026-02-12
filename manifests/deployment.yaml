@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delete-task
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delete-task
+  template:
+    metadata:
+      labels:
+        app: delete-task
+    spec:
+      containers:
+      - name: delete-task
+        env:
+          - name: CONNECTION_STRING
+            value: "Driver={ODBC Driver 17 for SQL Server};Server=tcp:todo-sqlserver-02.database.windows.net,1433;Database=todo-db-02;Uid=4dm1n157r470r;Pwd=4-v3ry-53cr37-p455w0rd;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+        image: todoacr01.azurecr.io/deletetask:v1
+        ports:
+        - containerPort: 8000
